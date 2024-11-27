@@ -93,10 +93,10 @@ Start-sleep -seconds 10
 
 foreach ($initiatorIP in $initiatorIPs) {
     foreach ($trgIP in $targetIPs) {
-        Connect-iSCSITarget -InitIP $initiatorIP -TargIP $trgIP -IsMultipathEnabled $true -TargetIQN $TargetIQN -IsPersistent $true
+        Connect-iSCSITarget -InitIP $initiatorIP -TargIP $trgIP -TargetIQN $TargetIQN
     }
 }
 		
 # Enable MPIO for iSCSI
-Write-Host "Enabling MPIO for iSCSI...""
+Write-Host "Enabling MPIO for iSCSI..."
 Enable-MSDSMAutomaticClaim -BusType iSCSI
