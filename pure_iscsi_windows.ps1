@@ -1,7 +1,7 @@
 # VARIABLES
-$TargetIQN = "iqn.1991-05.com.microsoft:testiqn"  # Replace with your iSCSI target IQN
-$targetPortals = @("172.16.16.201", "172.16.16.202", "172.16.16.205", "172.16.16.206")  # Replace with your target portals
-$targetIPs = @("172.16.16.201", "172.16.16.202", "172.16.16.203", "172.16.16.204", "172.16.16.205", "172.16.16.206", "172.16.16.207", "172.16.16.208")  # Replace with your target portals
+$TargetIQN = "iqn.2010-06.com.purestorage:flasharray.blahblahblah"  # Replace with your iSCSI target IQN
+$targetPortals = @("172.16.16.201", "172.16.16.202", "172.16.16.205", "172.16.16.206")  # Replace with your target portals...typically 1 or 2 IPs from each controller for redundancy and high availability.
+$targetIPs = @("172.16.16.201", "172.16.16.202", "172.16.16.203", "172.16.16.204", "172.16.16.205", "172.16.16.206", "172.16.16.207", "172.16.16.208")  # Replace with your target IPs. This may be the same as the targetPortals list or may include additional IPs, depending on how many iSCSI interfaces the controller has and how many paths are required to the storage.
 $ipPattern = "172.16.16.*"  # Replace with your host initiator IP pattern
 
 # FUNCTIONS
