@@ -24,23 +24,7 @@ function Connect-iSCSITargetPortal {
         [string]$PortalAddress
     )
     Write-Host "Connecting to iSCSI target portal $PortalAddress" -ForegroundColor Yellow
-    New-IscsiTargetPortal -TargetPortalAddress $PortalAddress -InitiatorPortalAddress 0.0.0.0 -InitiatorInstanceName ROOT\ISCSIPRT\0000_0
-}
-
-# Function to connect to iSCSI target
-function Connect-iSCSITarget {
-    param (
-        [string]$TargetIQN,
-        [string]$InitIP,
-        [string]$TargIP
-    )
-    Write-Host "Connecting to iSCSI target $TargetIQN on IP $TargIP from source $InitIP"
-    $session = Connect-IscsiTarget -InitiatorPortalAddress $InitIP -TargetPortalAddress $TargIP -NodeAddress $TargetIQN -IsPersistent $true -IsMultipathEnabled $true
-    if ($session -eq $null) {
-        Write-Host "Failed to connect to iSCSI target $TargetIQN on IP $TargIP from source $InitIP" -ForegroundColor Red
-    } else {
-        Write-Host "Successfully connected to iSCSI target $TargetIQN on IP $TargIP from source $InitIP" -ForegroundColor Green
-    }
+    New-IscsiTargetPortal -TargetPortalAddress $PortalAddress
 }
 
 # Get all network adapters with their IP addresses
@@ -89,11 +73,11 @@ foreach ($portal in $targetPortals) {
 }
 
 # Pause for portal creation completion
-Start-sleep -seconds 10
+Start-sleep -seconds 5
 
 foreach ($initiatorIP in $initiatorIPs) {
-    foreach ($trgIP in $targetIPs) {
-        Connect-iSCSITarget -InitIP $initiatorIP -TargIP $trgIP -TargetIQN $TargetIQN
+    foreach ($targetIP in $targetIPs) {
+        Connect-IscsiTarget -InitiatorPortalAddress $initiatorIP -TargetPortalAddress $targetIP -NodeAddress $targetIQN -IsPersistent $true -IsMultipathEnabled $true
     }
 }
 		
